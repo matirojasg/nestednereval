@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 with open("requirements.txt") as f:
     install_requires = f.read().splitlines()
-    
+
 setuptools.setup(
     name='nestednereval',
     version='0.0.1',
@@ -19,6 +19,9 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/matirojasg/nestednereval/issues"
     },
     license='MIT',
-    packages=['nestednereval'],
-    install_requires=['requests'],
+    classifiers=["Programming Language :: Python :: 3", "Operating System :: OS Independent"],
+    packages=setuptools.find_packages(),
+    python_requires=">=3.7",
+    install_requires=install_requires,
+    include_package_data=True,
 )
