@@ -3,6 +3,9 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open("requirements.txt") as f:
+    install_requires = f.read().splitlines()
+    
 setuptools.setup(
     name='nestednereval',
     version='0.0.1',
