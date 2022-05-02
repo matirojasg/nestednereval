@@ -3,7 +3,7 @@ These metrics are still part of a work in progress, so they have not yet
 been officially published as a library.
 """
 
-from nested_entities_utils import get_nestings
+from nestednereval.utils import get_nestings
 import numpy as np
 
 def calculate_f1_score(tp, fp, fn):

@@ -1,5 +1,5 @@
 # nestednereval
-Nested NER eval is a framework that calculates different types of metrics for the nested NER task.
+Nested NER eval is a framework inspired by seqeval that calculates different types of metrics for the nested NER task.
 
 ## Installation
 
@@ -41,13 +41,13 @@ Example of usage:
 {"real": [("Medication", 1,1)], "pred": [("Medication", 1,1)]}
 ]
 >>> standard_metric(entities)
-
+(1.0, 0.8, 0.888888888888889, 5)
 >>> flat_metric(entities)
-
+(1.0, 1.0, 1.0, 1)
 >>> nested_metric(entities)
-
+(1.0, 0.75, 0.8571428571428571, 4)
 >>> nesting_metric(entities)
-
+(1.0, 0.5, 0.6666666666666666, 2)
 ```
 
 ## License
@@ -57,7 +57,7 @@ Example of usage:
 ## Citation
 
 ```tex
-@misc{seqeval,
+@misc{nestednereval,
   title={{nestednereval}: An extension of Seqeval framework to evaluate task-specific evaluation metrics for nested NER.},
   url={https://github.com/matirojasg/nested_ner_eval},
   note={Software available from https://github.com/matirojasg/nested_ner_eval},

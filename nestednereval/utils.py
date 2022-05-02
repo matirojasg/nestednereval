@@ -2,9 +2,7 @@
 and obtaining flat and nested entities.
 """
 import re
-from tqdm import tqdm
 import warnings
-from collections import defaultdict
 
 def read_iob2_prediction_file(filepath):
     """Read files in IOB2 format and obtain a list of tags associated with each sentence.
@@ -27,7 +25,6 @@ def read_iob2_prediction_file(filepath):
     iob2_file = open(filepath, 'r').read()
     iob2_file = re.sub(r'\n\s*\n', '\n\n', iob2_file)
     chunks = []
-    #for i, sent in enumerate(tqdm(iob2_file.split('\n\n'), desc="Getting entities from sentences in IOB2 file")):
     for i, sent in enumerate(iob2_file.split('\n\n')):
         real_tags = []
         pred_tags = []
