@@ -6,7 +6,7 @@ Nested NER eval is a framework inspired by seqeval that calculates different typ
 To install seqeval, simply run:
 
 ```bash
-pip install nestednereval
+pip install git+https://github.com/matirojasg/nestednereval.git
 ```
 
 ## Support features
