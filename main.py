@@ -2,6 +2,7 @@ from nestednereval.metrics import standard_metric
 from nestednereval.metrics import flat_metric
 from nestednereval.metrics import nested_metric
 from nestednereval.metrics import nesting_metric
+from nestednereval.metrics import nested_ner_metrics
 
 
 if __name__=='__main__':
@@ -17,6 +18,8 @@ if __name__=='__main__':
     print(nested_metric(entities))
 
     print(nesting_metric(entities))
+
+    nested_ner_metrics(entities)
     
             
             

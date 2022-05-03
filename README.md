@@ -3,7 +3,7 @@ Nested NER eval is a framework inspired by seqeval that calculates different typ
 
 ## Installation
 
-To install seqeval, simply run:
+To install nestednereval, simply run:
 
 ```bash
 pip install git+https://github.com/matirojasg/nestednereval.git
@@ -11,7 +11,7 @@ pip install git+https://github.com/matirojasg/nestednereval.git
 
 ## Support features
 
-seqeval supports following schemes:
+nestednereval supports following schemes:
 
 - IOB2
 
