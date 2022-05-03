@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name='nestednereval',
-    version='0.0.1',
+    version='0.0.2',
     author='Matias Rojas',
     author_email='matias.rojas.g@ug.uchile.cl',
     description='Python framework for evaluating nested NER systems.',
