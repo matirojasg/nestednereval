@@ -22,7 +22,7 @@ def read_iob2_prediction_file(filepath):
             [{"real": [(PER, 0, 1)], "pred": (PER, 0, 1)]}]
     """
 
-    iob2_file = open(filepath, 'r').read()
+    iob2_file = open(filepath, 'r', encoding='UTF-8').read()
     iob2_file = re.sub(r'\n\s*\n', '\n\n', iob2_file)
     chunks = []
     for i, sent in enumerate(iob2_file.split('\n\n')):
