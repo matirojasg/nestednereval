@@ -147,7 +147,6 @@ def nesting_level_metric(entities):
       
       for e in v:
         if e not in sent["real"]:
-          if k 
           ar[k]["fp"]+=1
         else:
           if k==5:
