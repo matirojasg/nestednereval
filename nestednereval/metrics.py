@@ -133,6 +133,7 @@ def nesting_level_metric(entities):
 
   max_depth = 5
   ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
+  support = defaultdict(int)
 
   for sent in entities:
     pred_nestings = get_nestings(sent["pred"])
@@ -153,6 +154,7 @@ def nesting_level_metric(entities):
     
     for k, v in test_levels.items():
       for e in v:
+        support[k]+=1
         if e not in sent["pred"]:
           ar[k]["fn"]+=1
 
@@ -160,7 +162,7 @@ def nesting_level_metric(entities):
   
   for i, lvl in enumerate(ar):
     precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
-    print(f'micro F1-Score at nesting level {i}: {f1}, support: {len(test_levels[i])}')
+    print(f'micro F1-Score at nesting level {i}: {f1}, support: {support[i]}')
     
   return ar
 
