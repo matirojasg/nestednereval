@@ -5,6 +5,7 @@ been officially published as a library.
 
 from nestednereval.utils import get_nestings
 import numpy as np
+from collections import defaultdict
 
 def calculate_f1_score(tp, fp, fn):
   """Calculate F1 score using confusion matrix values.
