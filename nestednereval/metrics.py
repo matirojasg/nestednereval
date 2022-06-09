@@ -131,7 +131,7 @@ def nesting_level_metric(entities):
     Returns: ToDO
     """
 
-  max_depth = 5
+  max_depth = 6
   ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
   support = defaultdict(int)
 
