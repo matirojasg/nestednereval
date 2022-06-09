@@ -160,12 +160,12 @@ def nesting_level_metric(entities):
           ar[k]["fn"]+=1
 
 
-  
+  final_dict = defaultdict(int)
   for i, lvl in enumerate(ar):
     precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
     print(f'micro F1-Score at nesting level {i}: {f1}, support: {support[i]}')
-    
-  return ar
+    final_dict[i]=f1
+  return final_dict
 
 
 
