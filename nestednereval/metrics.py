@@ -143,14 +143,19 @@ def nesting_level_metric(entities):
     pred_levels = get_nestings_per_level(pred_nestings)
     test_levels = get_nestings_per_level(test_nestings)
 
+    if len(pred_levels)>4:
+      print(pred_levels)
+
+    if len(test_levels)>4:
+      print(test_levels)
+
     for k, v in pred_levels.items():
       
       for e in v:
         if e not in sent["real"]:
           ar[k]["fp"]+=1
         else:
-          if k==5:
-            print(pred_nestings)
+          
           ar[k]["tp"]+=1
       
     
