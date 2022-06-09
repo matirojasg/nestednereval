@@ -89,6 +89,83 @@ def nesting_metric(entities):
   precision, recall, f1 = calculate_f1_score(tp, fp, fn)
   return precision, recall, f1, support
 
+
+
+def get_nestings_per_level(nestings):
+  nestings_per_level = defaultdict(list)
+
+  for nesting in nestings:
+    entities_level = defaultdict(list)
+    lvl = 0
+    while(len(nesting)!=0):
+      for entity1 in nesting:
+        is_nested = False
+
+        for entity2 in nesting:
+          if entity1!=entity2:
+            if (entity1[1]>entity2[1] and entity1[2]<=entity2[2]) or (entity1[1]>=entity2[1] and entity1[2]<entity2[2]):
+          
+              is_nested = True
+
+        if not is_nested:
+          entities_level[lvl].append(entity1)
+      
+      for e in entities_level[lvl]:
+        nesting.remove(e)
+        lvl+=1
+
+
+    for k, v in entities_level.items():
+      for e in v:
+        nestings_per_level[k].append(e)
+    
+  return nestings_per_level
+  
+
+
+def nesting_level_metric(entities):
+  """Calculate micro F1 score over each level of nesting.
+    Args:
+        entities (list(dict)): List of dicts containing predicted and original entities.
+    Returns: ToDO
+    """
+
+  max_depth = 5
+  ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
+
+  for sent in entities:
+    pred_nestings = get_nestings(sent["pred"])
+    test_nestings = get_nestings(sent["real"])
+  
+
+    pred_levels = get_nestings_per_level(pred_nestings)
+    test_levels = get_nestings_per_level(test_nestings)
+
+    for k, v in pred_levels.items():
+      
+      for e in v:
+        if e not in sent["real"]:
+          ar[k]["fp"]+=1
+        else:
+          ar[k]["tp"]+=1
+      
+    
+    for k, v in test_levels.items():
+      for e in v:
+        if e not in sent["pred"]:
+          ar[k]["fn"]+=1
+
+
+  
+  for i, lvl in enumerate(ar):
+    precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
+    print(f'micro F1-Score at nesting level {i}: {f1}, support: {len(test_levels[i])}')
+    
+  return ar
+
+
+
+
 def flat_metric(entities):
   """Calculate micro F1 score over flat entities (not involved in any nesting).
     Args:
