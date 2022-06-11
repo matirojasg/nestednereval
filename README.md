@@ -59,8 +59,8 @@ Example of usage:
 ```tex
 @misc{nestednereval,
   title={{nestednereval}: An extension of Seqeval framework to evaluate task-specific evaluation metrics for nested NER.},
-  url={https://github.com/matirojasg/nested_ner_eval},
-  note={Software available from https://github.com/matirojasg/nested_ner_eval},
+  url={[https://github.com/matirojasg/nested_ner_eval](https://github.com/matirojasg/nestednereval)},
+  note={Software available from [https://github.com/matirojasg/nested_ner_eval](https://github.com/matirojasg/nestednereval)},
   author={Matías Rojas},
   year={2022},
 }
