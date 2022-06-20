@@ -57,9 +57,6 @@ def standard_metric(entities):
   return precision, recall, f1, support
 
 def length_metric(entities):
-  tp = 0
-  fn = 0
-  fp = 0
   support = 0
   from collections import defaultdict
   entities_length = defaultdict(lambda: defaultdict(int))
@@ -80,7 +77,7 @@ def length_metric(entities):
   
   final_dict = defaultdict(int)
   for length, values in entities_length.items():
-    precision, recall, f1 = calculate_f1_score(tp, fp, fn)
+    precision, recall, f1 = calculate_f1_score(values["tp"], values["fp"], values["fn"])
     final_dict[length]=f1
   return final_dict
 
