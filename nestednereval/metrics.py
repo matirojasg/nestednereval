@@ -62,7 +62,7 @@ def length_metric(entities):
   fp = 0
   support = 0
   from collections import defaultdict
-  d = defaultdict(lambda: defaultdict(int))
+  entities_length = defaultdict(lambda: defaultdict(int))
   for sent in entities:
     p = sent["pred"]
     g = sent["real"]
@@ -79,7 +79,7 @@ def length_metric(entities):
             entities_length[entity[2]-entity[1]+1]["fn"]+=1
   
   final_dict = defaultdict(int)
-  for length, values in d.items():
+  for length, values in entities_length.items():
     precision, recall, f1 = calculate_f1_score(tp, fp, fn)
     final_dict[length]=f1
   return final_dict
