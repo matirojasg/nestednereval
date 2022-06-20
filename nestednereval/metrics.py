@@ -124,7 +124,7 @@ def get_nestings_per_level(nestings):
   
 
 
-def nesting_level_metric(entities):
+def nesting_level_metric_relaxed(entities):
   """Calculate micro F1 score over each level of nesting.
     Args:
         entities (list(dict)): List of dicts containing predicted and original entities.
@@ -162,12 +162,53 @@ def nesting_level_metric(entities):
 
   final_dict = defaultdict(int)
   for i, lvl in enumerate(ar):
-    precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
+    _, _, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
     print(f'micro F1-Score at nesting level {i}: {f1}, support: {support[i]}')
     final_dict[i]=(f1, support[i])
   return final_dict
 
+def nesting_level_metric_strict(entities):
+  """Calculate micro F1 score over each level of nesting.
+    Args:
+        entities (list(dict)): List of dicts containing predicted and original entities.
+    Returns: ToDO
+    """
 
+  max_depth = 4
+  ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
+  support = defaultdict(int)
+
+  for sent in entities:
+    pred_nestings = get_nestings(sent["pred"])
+    test_nestings = get_nestings(sent["real"])
+  
+
+    pred_levels = get_nestings_per_level(pred_nestings)
+    test_levels = get_nestings_per_level(test_nestings)
+
+    for k, v in pred_levels.items():
+      
+      for e in v:
+        if e not in test_levels[k]:
+          ar[k]["fp"]+=1
+        else:
+          
+          ar[k]["tp"]+=1
+      
+    
+    for k, v in test_levels.items():
+      for e in v:
+        support[k]+=1
+        if e not in pred_levels[k]:
+          ar[k]["fn"]+=1
+
+
+  final_dict = defaultdict(int)
+  for i, lvl in enumerate(ar):
+    precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
+    print(f'micro F1-Score at nesting level {i}: {f1}, support: {support[i]}')
+    final_dict[i]=(f1, support[i])
+  return final_dict
 
 
 def flat_metric(entities):
