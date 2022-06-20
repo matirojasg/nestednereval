@@ -56,6 +56,34 @@ def standard_metric(entities):
   precision, recall, f1 = calculate_f1_score(tp, fp, fn)
   return precision, recall, f1, support
 
+def length_metric(entities):
+  tp = 0
+  fn = 0
+  fp = 0
+  support = 0
+  from collections import defaultdict
+  d = defaultdict(lambda: defaultdict(int))
+  for sent in entities:
+    p = sent["pred"]
+    g = sent["real"]
+
+    for entity in p: 
+        if entity in g: 
+            entities_length[entity[2]-entity[1]+1]["tp"]+=1
+        if entity not in g:
+            entities_length[entity[2]-entity[1]+1]["fp"]+=1
+
+    for entity in g:
+        support+=1
+        if entity not in p:
+            entities_length[entity[2]-entity[1]+1]["fn"]+=1
+  
+  final_dict = defaultdict(int)
+  for length, values in d.items():
+    precision, recall, f1 = calculate_f1_score(tp, fp, fn)
+    final_dict[length]=f1
+  return final_dict
+
 def nesting_metric(entities):
   """Calculate micro F1 score over complete nestings (detecting inner and outer entities simultaneously).
     Args:
