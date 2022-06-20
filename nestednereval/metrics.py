@@ -117,8 +117,13 @@ def get_nestings_per_level(nestings):
 
 
     for k, v in entities_level.items():
-      for e in v:
-        nestings_per_level[k].append(e)
+      if k==0:
+        for e in v:
+          nestings_per_level[0].append(e)
+      else:
+        for e in v:
+          nestings_per_level[1].append(e)
+
     
   return nestings_per_level
   
@@ -131,7 +136,7 @@ def nesting_level_metric_relaxed(entities):
     Returns: ToDO
     """
 
-  max_depth = 4
+  max_depth = 2
   ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
   support = defaultdict(int)
 
@@ -174,7 +179,7 @@ def nesting_level_metric_strict(entities):
     Returns: ToDO
     """
 
-  max_depth = 4
+  max_depth = 2
   ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
   support = defaultdict(int)
 
@@ -187,13 +192,17 @@ def nesting_level_metric_strict(entities):
     test_levels = get_nestings_per_level(test_nestings)
 
     for k, v in pred_levels.items():
-      
+ 
+
       for e in v:
         if e not in test_levels[k]:
           ar[k]["fp"]+=1
         else:
           
           ar[k]["tp"]+=1
+      
+    
+
       
     
     for k, v in test_levels.items():
