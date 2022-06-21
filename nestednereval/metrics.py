@@ -78,7 +78,11 @@ def length_metric(entities):
   for k, v in entities_length_accuracy.items():
     entities_length_accuracy[k] = v/support[k]
 
+  print(support)
+
+  entities_length_accuracy = dict(sorted(entities_length_accuracy.items(), key=lambda item: item[0]))
  
+
 
   return entities_length_accuracy
 
@@ -184,7 +188,7 @@ def nesting_level_metric_relaxed(entities):
     accuracy_dict[k] = v/support[k]
 
 
-
+  accuracy_dict = dict(sorted(accuracy_dict.items(), key=lambda item: item[0]))
   return accuracy_dict
 
 
@@ -217,7 +221,7 @@ def nesting_level_metric_strict(entities):
   for k, v in accuracy_dict.items():
     accuracy_dict[k] = v/support[k]
 
-
+  accuracy_dict = dict(sorted(accuracy_dict.items(), key=lambda item: item[0]))
   return accuracy_dict
 
 
