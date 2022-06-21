@@ -172,9 +172,8 @@ def nesting_level_metric_relaxed(entities):
     Returns: ToDO
     """
 
-  max_depth = 2
-  ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
   support = defaultdict(int)
+  accuracy_dict = defaultdict(int)
 
   for sent in entities:
     pred_nestings = get_nestings(sent["pred"])
@@ -184,28 +183,20 @@ def nesting_level_metric_relaxed(entities):
     pred_levels = get_nestings_per_level(pred_nestings)
     test_levels = get_nestings_per_level(test_nestings)
 
-    for k, v in pred_levels.items():
-      
-      for e in v:
-        if e not in sent["real"]:
-          ar[k]["fp"]+=1
-        else:
-          
-          ar[k]["tp"]+=1
-      
-    
+
     for k, v in test_levels.items():
       for e in v:
         support[k]+=1
-        if e not in sent["pred"]:
-          ar[k]["fn"]+=1
+        if e in sent["pred"]:
+          accuracy_dict[k]+=1
+    
+  for k, v in accuracy_dict.items():
+    accuracy_dict[k] = k/support[k]
 
+  print(support)
 
-  final_dict = defaultdict(int)
-  for i, lvl in enumerate(ar):
-    _, _, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
-    final_dict[i]=(f1, support[i])
-  return final_dict
+  return accuracy_dict
+
 
 def nesting_level_metric_strict(entities):
   """Calculate micro F1 score over each level of nesting.
@@ -214,9 +205,9 @@ def nesting_level_metric_strict(entities):
     Returns: ToDO
     """
 
-  max_depth = 2
-  ar = [{"tp": 0, "fp": 0, "fn": 0} for i in range(max_depth)]
+
   support = defaultdict(int)
+  accuracy_dict = defaultdict(int)
 
   for sent in entities:
     pred_nestings = get_nestings(sent["pred"])
@@ -226,32 +217,18 @@ def nesting_level_metric_strict(entities):
     pred_levels = get_nestings_per_level(pred_nestings)
     test_levels = get_nestings_per_level(test_nestings)
 
-    for k, v in pred_levels.items():
- 
 
-      for e in v:
-        if e not in test_levels[k]:
-          ar[k]["fp"]+=1
-        else:
-          
-          ar[k]["tp"]+=1
-      
-    
-
-      
-    
     for k, v in test_levels.items():
       for e in v:
         support[k]+=1
-        if e not in pred_levels[k]:
-          ar[k]["fn"]+=1
+        if e in pred_levels[k]:
+          accuracy_dict[k]+=1
+    
+  for k, v in accuracy_dict.items():
+    accuracy_dict[k] = k/support[k]
 
 
-  final_dict = defaultdict(int)
-  for i, lvl in enumerate(ar):
-    precision, recall, f1 = calculate_f1_score(lvl["tp"], lvl["fp"], lvl["fn"])
-    final_dict[i]=(f1, support[i])
-  return final_dict
+  return accuracy_dict
 
 
 def flat_metric(entities):
