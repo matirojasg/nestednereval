@@ -225,7 +225,7 @@ def nesting_level_metric_strict(entities):
           accuracy_dict[k]+=1
     
   for k, v in accuracy_dict.items():
-    accuracy_dict[k] = k/support[k]
+    accuracy_dict[k] = v/support[k]
 
 
   return accuracy_dict
