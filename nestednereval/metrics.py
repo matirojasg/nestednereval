@@ -57,40 +57,30 @@ def standard_metric(entities):
   return precision, recall, f1, support
 
 def length_metric(entities):
-  support = 0
   
-  from collections import defaultdict
-  entities_length = defaultdict(lambda: defaultdict(int))
+
   entities_length_accuracy = defaultdict(int)
-  entities_length_support = defaultdict(int)
+  support = defaultdict(int)
+
   for sent in entities:
     p = sent["pred"]
     g = sent["real"]
 
-    for entity in p: 
-        if entity in g: 
-            entities_length[entity[2]-entity[1]+1]["tp"]+=1
-        if entity not in g:
-            entities_length[entity[2]-entity[1]+1]["fp"]+=1
 
     for entity in g:
-        entities_length_support[entity[2]-entity[1]+1]+=1
-        support+=1
-        if entity not in p:
-            entities_length[entity[2]-entity[1]+1]["fn"]+=1
-        else:
-          entities_length_accuracy[entity[2]-entity[1]+1]+=1
+        support[entity[2]-entity[1]+1]+=1
+ 
+        if entity in p:
+            entities_length_accuracy[entity[2]-entity[1]+1]+=1
   
-  final_dict = defaultdict(int)
-  for length, values in entities_length.items():
-    precision, recall, f1 = calculate_f1_score(values["tp"], values["fp"], values["fn"])
-    final_dict[length]=f1
   
-  final_dict_acc = defaultdict(int)
+    
   for k, v in entities_length_accuracy.items():
-    final_dict_acc[k] = v/entities_length_support[k]
+    entities_length_accuracy[k] = v/support[k]
 
-  return final_dict, final_dict_acc
+ 
+
+  return entities_length_accuracy
 
 def nesting_metric(entities):
   """Calculate micro F1 score over complete nestings (detecting inner and outer entities simultaneously).
@@ -193,7 +183,7 @@ def nesting_level_metric_relaxed(entities):
   for k, v in accuracy_dict.items():
     accuracy_dict[k] = v/support[k]
 
-  print(support)
+
 
   return accuracy_dict
 
