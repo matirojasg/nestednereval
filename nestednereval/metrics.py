@@ -78,7 +78,8 @@ def length_metric(entities):
         support+=1
         if entity not in p:
             entities_length[entity[2]-entity[1]+1]["fn"]+=1
-            entities_length_accuracy[entity[2]-entity[1]+1]+=1
+        else:
+          entities_length_accuracy[entity[2]-entity[1]+1]+=1
   
   final_dict = defaultdict(int)
   for length, values in entities_length.items():
