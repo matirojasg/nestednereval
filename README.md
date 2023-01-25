@@ -35,7 +35,8 @@ Example of usage:
 >>> from nestednereval.metrics import flat_metric
 >>> from nestednereval.metrics import nested_metric
 >>> from nestednereval.metrics import nesting_metric
->>> # An example composed of two sentences.
+>>> # An example is composed of two sentences. The input is a list with two dictionaries. Each dictionary has two keys, "real" and "pred," and the value of these keys is a list of the entities. Each entity is a tuple (entity type, start token index, end token index).
+
 >>> entities = [{"real": [("Body Part", 2, 2), ("Disease", 0, 2)], "pred": [("Body Part", 2, 2), ("Disease", 0, 2)]},
 {"real": [("Body Part", 2, 2), ("Disease", 0, 2)], "pred": [("Disease", 0, 2)]},
 {"real": [("Medication", 1,1)], "pred": [("Medication", 1,1)]}
@@ -50,6 +51,7 @@ Example of usage:
 (1.0, 0.5, 0.6666666666666666, 2)
 ```
 
+Note that the output of each of these metrics is the following: (precision score, recall score, f1 score, support)
 ## License
 
 [MIT](hhttps://github.com/matirojasg/nested_ner_eval/blob/main/LICENSE)
